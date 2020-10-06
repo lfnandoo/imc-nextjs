@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   Button,
   Container,
@@ -9,6 +11,16 @@ import {
 import styles from "./Calculator.module.scss";
 
 function Calculator() {
+  const [height, setHeight] = useState(0);
+  const [weight, setWeight] = useState(0);
+  const [imc, setImc] = useState(0);
+
+  function calculateImc() {
+    const heightToMeters = height / 100;
+    const imcCalc = weight / (heightToMeters * heightToMeters);
+    setImc(Number(imcCalc.toFixed(2)));
+  }
+
   return (
     <div className={styles.calculator}>
       <Container maxWidth="xs">
@@ -20,6 +32,7 @@ function Calculator() {
               variant="filled"
               fullWidth
               type="number"
+              onChange={({ target }) => setHeight(Number(target.value))}
             />
           </Grid>
           <Grid item>
@@ -28,15 +41,21 @@ function Calculator() {
               variant="filled"
               fullWidth
               type="number"
+              onChange={({ target }) => setWeight(Number(target.value))}
             />
           </Grid>
           <Grid item>
-            <Button variant="contained" color="primary" fullWidth>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              onClick={() => calculateImc()}
+            >
               Calcular
             </Button>
           </Grid>
           <Grid item>
-            <Typography>O seu IMC é: </Typography>
+            <Typography>O seu IMC é: {imc} kg/m2</Typography>
           </Grid>
         </Grid>
       </Container>
