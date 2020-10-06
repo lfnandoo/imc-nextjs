@@ -21,6 +21,15 @@ function Calculator() {
     setImc(Number(imcCalc.toFixed(2)));
   }
 
+  function verifyImc() {
+    if (imc < 18.5) return "Abaixo do peso";
+    if (imc < 24.9) return "Peso normal";
+    if (imc < 29.9) return "Sobrepeso";
+    if (imc < 34.9) return "Obesidade grau 1";
+    if (imc < 39.9) return "Obesidade grau 2";
+    return "Obesidade grau 3";
+  }
+
   return (
     <div className={styles.calculator}>
       <Container maxWidth="xs">
@@ -55,7 +64,13 @@ function Calculator() {
             </Button>
           </Grid>
           <Grid item>
-            <Typography>O seu IMC é: {imc} kg/m2</Typography>
+            {imc === 0 ? (
+              ""
+            ) : (
+              <Typography>
+                O seu IMC é: {imc} kg/m2 {verifyImc()}
+              </Typography>
+            )}
           </Grid>
         </Grid>
       </Container>
